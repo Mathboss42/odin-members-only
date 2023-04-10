@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('signup');
-});
+const signupController = require('../controllers/signupController');
+
+router.get('/', signupController.signupGet);
+
+router.post('/', signupController.signupPost);
 
 module.exports = router;

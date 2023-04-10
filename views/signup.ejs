@@ -1,25 +1,30 @@
 <form action="" method="POST">
     <div class="form-section">
         <label for="firstname">First Name:</label>
-        <input type="text" name="firstname" id="firstname" minlength="2" maxlength="100" class="form-control">
+        <input type="text" name="firstname" id="firstname" minlength="2" maxlength="100" class="form-control" value="<%= firstName ? firstName : '' %>" required>
     </div>
     <div class="form-section">
         <label for="lastname">Last Name:</label>
-        <input type="text" name="lastname" id="lastname" minlength="2" maxlength="100" class="form-control">
+        <input type="text" name="lastname" id="lastname" minlength="2" maxlength="100" class="form-control" value="<%= lastName ? lastName : '' %>" required>
     </div>
     <div class="form-section">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" minlength="2" maxlength="100" class="form-control">
+        <input type="text" name="username" id="username" minlength="2" maxlength="100" class="form-control" value="<%= username ? username : '' %>" required>
     </div>
     <div class="form-section">
         <label for="password">Password:</label>
-        <input type="text" name="password" id="password" minlength="8" maxlength="16" class="form-control">
+        <input type="password" name="password" id="password" minlength="8" maxlength="16" class="form-control" required>
     </div>
     <div class="form-section">
         <label for="status">Membership Status:</label>
         <select name="status" id="status" class="form-control">
-            <option value="user">Regular User</option>
-            <option value="member">VIP: Member</option>
+            <% if (status === 'user' || status === undefined) { %>
+                <option value="user" selected>Regular User</option>
+                <option value="member">VIP: Member</option>
+            <% } else { %>
+                <option value="user">Regular User</option>
+                <option value="member" selected>VIP: Member</option>
+            <% } %>
         </select>
     </div>
     <div class="form-section">

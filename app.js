@@ -4,6 +4,10 @@ var expressLayouts = require('express-ejs-layouts');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require("express-session");
+const passport = require("passport");
+const bcrypt = require('bcryptjs');
+const LocalStrategy = require("passport-local").Strategy;
 
 require('dotenv').config()
 
@@ -11,6 +15,46 @@ var indexRouter = require('./routes/index');
 var postsRouter = require('./routes/posts');
 var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
+
+const User = require('./models/User');
+
+passport.use(
+  new LocalStrategy(async(username, password, done) => {
+      try {
+          const user = await User.findOne({ username: username });
+          if (!user) {
+              return done(null, false, { message: "Incorrect username" });
+          };
+          bcrypt.compare(password, user.password, (err, res) => {
+              if (res) {
+                  console.log('match')
+                  // passwords match! log user in
+                  return done(null, user);
+              } else {
+                  console.log('doesnt match')
+                  console.log(password, user.password);
+                // passwords do not match!
+                return done(null, false, { message: "Incorrect password" });
+              }
+          });
+      } catch(err) {
+          return done(err);
+      };
+  })
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async function(id, done) {
+  try {
+      const user = await User.findById(id);
+      done(null, user);
+  } catch(err) {
+      done(err);
+  };
+});
 
 var app = express();
 
@@ -35,6 +79,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(function(req, res, next) {
   res.locals.title = 'Awesome Club';
