@@ -1,8 +1,12 @@
-body {
+form {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 400px;
 }
 
-a {
-  color: #00B7FF;
+.form-section {
+  margin-bottom: 20px;
+}
+
+button {
+  margin-top: 10px;
 }
