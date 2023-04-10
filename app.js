@@ -15,13 +15,16 @@ var indexRouter = require('./routes/index');
 var postsRouter = require('./routes/posts');
 var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 
 const User = require('./models/User');
 
 passport.use(
   new LocalStrategy(async(username, password, done) => {
       try {
-          const user = await User.findOne({ username: username });
+          console.log('hello')
+          const user = await User.findOne({ userName: username });
+          console.log(user);
           if (!user) {
               return done(null, false, { message: "Incorrect username" });
           };
@@ -49,10 +52,10 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(async function(id, done) {
   try {
-      const user = await User.findById(id);
-      done(null, user);
+    const user = await User.findById(id);
+    done(null, user);
   } catch(err) {
-      done(err);
+    done(err);
   };
 });
 
@@ -76,16 +79,17 @@ app.use(expressLayouts);
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(function(req, res, next) {
   res.locals.title = 'Awesome Club';
+  res.locals.currentUser = req.user;
   next();
 });
 
@@ -93,6 +97,7 @@ app.use('/', indexRouter);
 app.use('/posts', postsRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

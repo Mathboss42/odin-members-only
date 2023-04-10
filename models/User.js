@@ -15,7 +15,7 @@ UserSchema.virtual("name").get(function () {
     // We want to make sure we handle the exception by returning an empty string for that case
     let fullname = "";
     if (this.firstName && this.lastName) {
-        fullname = `${this.lastName}, ${this.firstName}`;
+        fullname = `${this.firstName} ${this.lastName}`;
     }
     if (!this.firstName || !this.lastName) {
         fullname = "";
