@@ -29,6 +29,11 @@ exports.signupPost = [
         .trim()
         .isLength({ min: 8, max: 16 })
         .escape(),
+    body("passwordconfirmation", "Password Confirmation must not be empty and must have the same value as password.")
+        .trim()
+        .isLength({ min: 8, max: 16 })
+        .escape()
+        .custom((value, { req }) => value === req.body.password),
     body("status", "Membership Status must not be empty.")
         .trim()
         .isLength({ min: 1 })
@@ -38,12 +43,13 @@ exports.signupPost = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            console.log('rerender', req.body.status)
+            console.log('rerender', errors.array());
             res.render('signup', {
                 firstName: req.body.firstname,
                 lastName: req.body.lastname,
                 username: req.body.username,
-                status: req.body.status
+                status: req.body.status,
+                errors: errors.array(),
             });
             return;
         }
