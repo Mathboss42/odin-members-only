@@ -61,7 +61,13 @@ exports.signupPost = [
                     status: req.body.status
                 });
                 const result = await user.save();
-                res.redirect("/");
+                req.login(user, function(err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    console.log(req);
+                    res.redirect("/");
+                });
             });
         } catch(err) {
             return next(err);
