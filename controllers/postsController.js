@@ -5,12 +5,12 @@ const Post = require('../models/Post');
 exports.postsGetAll = async (req, res) => {
     const posts = await Post.find({}, 'title');
     res.render('posts', { posts: posts });
-}
+};
 
 exports.postsGetPost = async (req, res) => {
     const post = await Post.findOne({ _id: req.params.id }).populate('author');
     res.render('post', { post: post });
-}
+};
 
 exports.postCreateGet = (req, res) => {
     if (req.user) {
@@ -56,4 +56,21 @@ exports.postCreatePost = [
             return next(err);
         });
     }
-]
+];
+
+exports.postDeleteGet = async (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
+        const post = await Post.findById(req.params.id);
+        res.render('delete', { post: post });
+    } else {
+        res.redirect('/');
+    }
+};
+
+exports.postDeletePost = (req, res, next) => {
+    Post.findByIdAndRemove(req.params.id).then(() => {
+        res.redirect('/');
+    }).catch((err) => {
+        next(err);
+    });
+};

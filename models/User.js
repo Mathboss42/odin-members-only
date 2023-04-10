@@ -7,7 +7,8 @@ const UserSchema = new Schema({
     lastName: { type: String, required: true, minLength: 2, maxLength: 100 },
     userName: { type: String, required: true, minLength: 2, maxLength: 100 },
     password: { type: String, required: true, minLength: 8},
-    status: { type: String, enum: ['user', 'member'] }
+    status: { type: String, enum: ['user', 'member'] },
+    isAdmin: Boolean
 });
 
 UserSchema.virtual("name").get(function () {

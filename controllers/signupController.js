@@ -34,6 +34,9 @@ exports.signupPost = [
         .isLength({ min: 8, max: 16 })
         .escape()
         .custom((value, { req }) => value === req.body.password),
+    body("adminpassword", "Sanitize admin password field.")
+        .trim()
+        .escape(),
 
     async (req, res, next) => {
         const errors = validationResult(req);
@@ -59,7 +62,8 @@ exports.signupPost = [
                     lastName: req.body.lastname,
                     userName: req.body.username,
                     password: hashedPassword,
-                    status: 'user'
+                    status: 'user',
+                    isAdmin: req.body.adminpassword === process.env.IS_ADMIN_PASSWORD
                 });
                 const result = await user.save();
                 req.login(user, function(err) {

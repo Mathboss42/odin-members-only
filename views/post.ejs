@@ -3,3 +3,6 @@
 <% if (currentUser && currentUser.status === 'member') { %>
     <p>Written By: <%= post.author.name %> on <%= post.timeStampFormatted %></p>
 <% } %>
+<% if (currentUser && currentUser.isAdmin) { %>
+    <p><a href="<%= post.url %>/delete">Delete Post</a></p>
+<% } %>
