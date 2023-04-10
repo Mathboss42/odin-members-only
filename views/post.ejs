@@ -1,2 +1,5 @@
 <h1><%= post.title %></h1>
 <p><%= post.text %></p>
+<% if (currentUser && currentUser.status === 'member') { %>
+    <p>Written By: <%= post.author.name %></p>
+<% } %>

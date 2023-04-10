@@ -5,5 +5,5 @@
 <% } %>
 <p>Here are the latests posts:</p>
 <% for (post of posts) { %>
-    <a href="/posts/post/<%= post._id %>"><%= post.title %></a>
+    <a href="<%= post.url %>"><%= post.title %></a>
 <% } %>

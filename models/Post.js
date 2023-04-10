@@ -11,7 +11,7 @@ const PostSchema = new Schema({
 });
 
 PostSchema.virtual("url").get(function () {
-    return `/posts/${this._id}`;
+    return `/posts/post/${this._id}`;
 });
 
 PostSchema.virtual("timeStampFormatted").get(function () {

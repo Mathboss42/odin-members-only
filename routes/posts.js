@@ -6,6 +6,6 @@ const postsController = require('../controllers/postsController');
 /* GET home page. */
 router.get('/', postsController.postsGetAll);
 
-router.get('/:id', postsController.postsGetPost);
+router.get('/post/:id', postsController.postsGetPost);
 
 module.exports = router;

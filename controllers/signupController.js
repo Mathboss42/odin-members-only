@@ -47,7 +47,6 @@ exports.signupPost = [
                 firstName: req.body.firstname,
                 lastName: req.body.lastname,
                 username: req.body.username,
-                status: req.body.status,
                 errors: errors.array(),
             });
             return;
@@ -63,7 +62,7 @@ exports.signupPost = [
                     lastName: req.body.lastname,
                     userName: req.body.username,
                     password: hashedPassword,
-                    status: req.body.status
+                    status: 'user'
                 });
                 const result = await user.save();
                 req.login(user, function(err) {
