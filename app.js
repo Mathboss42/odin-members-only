@@ -22,20 +22,15 @@ const User = require('./models/User');
 passport.use(
   new LocalStrategy(async(username, password, done) => {
       try {
-          console.log('hello')
           const user = await User.findOne({ userName: username });
-          console.log(user);
           if (!user) {
               return done(null, false, { message: "Incorrect username" });
           };
           bcrypt.compare(password, user.password, (err, res) => {
               if (res) {
-                  console.log('match')
                   // passwords match! log user in
                   return done(null, user);
               } else {
-                  console.log('doesnt match')
-                  console.log(password, user.password);
                 // passwords do not match!
                 return done(null, false, { message: "Incorrect password" });
               }

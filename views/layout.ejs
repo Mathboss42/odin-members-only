@@ -11,13 +11,17 @@
 <body>
     <header class="card-header">
         <h1><a href="/">Awesome Club</a></h1>
-        <a href="/signup">Sign Up</a>
-        <% if (currentUser) { %>
-            <a href="/logout">Log out</a>
-        <% } else { %>
-            <a href="/login">Log In</a>
-        <% } %>
+        <div>
+            <a href="/signup">Sign Up</a>
+            <% if (currentUser) { %>
+                <a href="/logout">Log out</a>
+            <% } else { %>
+                <a href="/login">Log In</a>
+            <% } %>
+        </div>
     </header>
-    <%- body %>
+    <main>
+        <%- body %>
+    </main>
 </body>
 </html>

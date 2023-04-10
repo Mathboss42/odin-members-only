@@ -10,3 +10,20 @@ form {
 button {
   margin-top: 10px;
 }
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header > div {
+  display: flex;
+  gap: 50px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

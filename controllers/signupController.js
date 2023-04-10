@@ -43,7 +43,6 @@ exports.signupPost = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            console.log('rerender', errors.array());
             res.render('signup', {
                 firstName: req.body.firstname,
                 lastName: req.body.lastname,
@@ -71,7 +70,6 @@ exports.signupPost = [
                     if (err) {
                         return next(err);
                     }
-                    console.log(req);
                     res.redirect("/");
                 });
             });

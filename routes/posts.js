@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+const postsController = require('../controllers/postsController');
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('posts', { title: 'hello' });
-});
+router.get('/', postsController.postsGetAll);
+
+router.get('/:id', postsController.postsGetPost);
 
 module.exports = router;

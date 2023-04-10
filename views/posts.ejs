@@ -1,6 +1,9 @@
-<h1><%= title %></h1>
 <% if (currentUser) { %>
-    <p>Welcome <%= currentUser.name %>!</p>
+    <h1>Welcome <%= currentUser.name %>!</h1>
 <% } else { %>
-    <p>Welcome!</p>
+    <h1>Welcome!</h1>
+<% } %>
+<p>Here are the latests posts:</p>
+<% for (post of posts) { %>
+    <a href="/posts/post/<%= post._id %>"><%= post.title %></a>
 <% } %>
