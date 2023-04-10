@@ -34,15 +34,12 @@ exports.signupPost = [
         .isLength({ min: 8, max: 16 })
         .escape()
         .custom((value, { req }) => value === req.body.password),
-    body("status", "Membership Status must not be empty.")
-        .trim()
-        .isLength({ min: 1 })
-        .escape(),
 
     async (req, res, next) => {
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
+            console.log(errors.array());
             res.render('signup', {
                 firstName: req.body.firstname,
                 lastName: req.body.lastname,

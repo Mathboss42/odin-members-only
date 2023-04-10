@@ -21,6 +21,9 @@
             <% if (currentUser && currentUser.status === 'user') { %>
                 <a href="/join">Join The Club</a>
             <% } %>
+            <% if (currentUser) { %>
+                <a href="/posts/new">Write A Post</a>
+            <% } %>
         </div>
     </header>
     <main>

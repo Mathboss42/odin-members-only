@@ -2,16 +2,6 @@ const { body, validationResult } = require("express-validator");
 
 const Post = require('../models/Post');
 
-exports.postsGetAll = async (req, res) => {
-    const posts = await Post.find({}, 'title');
-    res.render('posts', { posts: posts });
-}
-
-exports.postsGetPost = async (req, res) => {
-    const post = await Post.findOne({ _id: req.params.id }).populate('author');
-    res.render('post', { post: post });
-}
-
 exports.postCreateGet = (req, res) => {
     if (req.user) {
         res.render('new', { title: undefined, text: undefined});
@@ -41,13 +31,11 @@ exports.postCreatePost = [
             return;
         }
         
-        console.log(req.user);
-
         const post = new Post({
             title: req.body.title,
             text: req.body.text,
             timeStamp: Date.now(),
-            author: req.user._id
+            author: req.body.user._id
         });
 
         post.save().then(() => {
